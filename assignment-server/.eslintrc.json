@@ -1,0 +1,7 @@
+/* eslint-env node, mocha */
+{
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "assignment-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "type": "commonjs",
+  "scripts": {
+    "test": "test",
+    "dev": "nodemon index.ts",
+    "start": "ts-node index.ts"
+  },
+  "author": "Sid",
+  "license": "ISC",
+  "dependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/ws": "^8.5.4",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "web3": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.2.4"
+  }
+}
