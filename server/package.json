@@ -6,8 +6,8 @@
   "type": "commonjs",
   "scripts": {
     "test": "test",
-    "dev": "nodemon index.ts",
-    "start": "ts-node index.ts"
+    "dev": "nodemon src/index.ts",
+    "start": "ts-node src/index.ts"
   },
   "author": "Sid",
   "license": "ISC",
