@@ -1,19 +1,31 @@
-const initiateSocket = async (ws: any, memory, fetchInfo)=>{// communicate latest info to client on connection open
+const initiateSocket = async (ws: any, memory: any, fetchInfo: any)=>{// communicate latest info to client on connection open
+    // Get latest info
     const ethPrice = memory.getEthPrice();
     const gasPrice = memory.getGasPrice();
 
-    ws.on('open', () => console.log('Client connected'));
-    console.log('Client connected');
+    // Listen for connection open
+    ws.on('open', () => {
+        console.log('Client connected');
+    });
 
-    // If we don't have the latest info, fetch it
-    if(!gasPrice || !ethPrice){
-        await fetchInfo();
-    }
+    // If gasPrice or ethPrice are 0
+    // Update ethPrice and gasPrice Info
+    // Get latest info
     // Send data to client
-    ws.send(JSON.stringify({ethPrice: ethPrice, gasPrice: gasPrice}));
+    ( async ()=>{ 
+        console.log('Client connected', ethPrice);
+        if(!gasPrice || !ethPrice){
+            await fetchInfo();
+            const ethPrice = memory.getEthPrice();
+            const gasPrice = memory.getGasPrice();
+            ws.send(JSON.stringify({ethPrice: ethPrice, gasPrice: gasPrice}));
+        } else {
+            ws.send(JSON.stringify({ethPrice: ethPrice, gasPrice: gasPrice}));
+        }}
+    )();
 
     // listen for messages from client
-    ws.on('message', _message => {
+    ws.on('message', (_message: any) => {
         // Do nothing - stay unidirectional for now
     });
 

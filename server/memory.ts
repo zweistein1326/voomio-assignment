@@ -1,6 +1,6 @@
 class Memory {
-    gasPrice: object;
-    ethPrice: string;
+    gasPrice: string;
+    ethPrice: object;
 
     getGasPrice = () => {
         return this.gasPrice;
