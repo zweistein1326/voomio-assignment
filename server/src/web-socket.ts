@@ -13,7 +13,7 @@ const initiateSocket = async (ws: any, memory: any, fetchInfo: any)=>{// communi
     // Get latest info
     // Send data to client
     ( async ()=>{ 
-        console.log('Client connected', ethPrice);
+        console.log('Client connected');
         if(!gasPrice || !ethPrice){
             await fetchInfo();
             const ethPrice = memory.getEthPrice();
