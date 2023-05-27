@@ -1,41 +1,38 @@
-const initiateSocket = async (ws: any, memory: any, fetchInfo: any)=>{// communicate latest info to client on connection open
+import {ETHPrice} from "./types";
+
+const initiateSocket = async (ws: any, memory: any, updatePriceInfo: any)=>{
     // Get latest info
-    const ethPrice = memory.getEthPrice();
-    const gasPrice = memory.getGasPrice();
+    let ethPrice: ETHPrice = memory.getEthPrice();
+    let gasPrice: string = memory.getGasPrice();
 
+    // -------------------------EVENT LISTENERS------------------------- //
     // Listen for connection open
-    ws.on('open', () => {
-        console.log('Client connected');
-    });
+    ws.on('open', (_: any): void => console.log('Client connected'));
+    // listen for messages from client
+    ws.on('message', (_message: any): void => console.log('Message recieved from client'));
+    // listen for client disconnect
+    ws.on('close', (_: any): void => console.log('Client disconnected'));
+    // listen for errors
+    ws.on('error', (err: any): void => console.log(err))
+    // -------------------------EVENT LISTENERS------------------------- //
 
+    // -------------------------SEND INFO------------------------- //
     // If gasPrice or ethPrice are 0
     // Update ethPrice and gasPrice Info
     // Get latest info
     // Send data to client
-    ( async ()=>{ 
-        console.log('Client connected');
+    const sendInfo = async (): Promise<void> => { 
         if(!gasPrice || !ethPrice){
-            await fetchInfo();
-            const ethPrice = memory.getEthPrice();
-            const gasPrice = memory.getGasPrice();
-            ws.send(JSON.stringify({ethPrice: ethPrice, gasPrice: gasPrice}));
-        } else {
-            ws.send(JSON.stringify({ethPrice: ethPrice, gasPrice: gasPrice}));
-        }}
-    )();
+            await updatePriceInfo();
+            ethPrice = memory.getEthPrice();
+            gasPrice = memory.getGasPrice();
+        }
+        ws.send(JSON.stringify({ethPrice, gasPrice}));
+    }
 
-    // listen for messages from client
-    ws.on('message', (_message: any) => {
-        // Do nothing - stay unidirectional for now
-    });
-
-    // listen for client disconnect
-    ws.on('close', () => console.log('Client disconnected'));
-
-    // listen for errors
-    ws.on('error', (err: any) => {
-        console.log(err);
-    })
+    // communicate latest info to client on connection open
+    sendInfo();
+    // -------------------------SEND INFO------------------------- //
 }
 
-module.exports = {initiateSocket};
+export {initiateSocket};

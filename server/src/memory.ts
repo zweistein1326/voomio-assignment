@@ -1,22 +1,29 @@
+import {ETHPrice} from "./types";
+
 class Memory {
     gasPrice: string;
-    ethPrice: object;
+    ethPrice: ETHPrice;
 
-    getGasPrice = () => {
+    constructor() {
+        this.gasPrice = '';
+        this.ethPrice = {};
+    }
+
+    getGasPrice = (): string => {
         return this.gasPrice;
     }
 
-    getEthPrice = () => {
+    getEthPrice = (): ETHPrice => {
         return this.ethPrice;
     }
 
-    setGasPrice = (price) => {
-        this.gasPrice = price;
+    setGasPrice = (price: string | number): void => {
+        this.gasPrice = price.toString();
     }
 
-    setEthPrice = (price) => {
+    setEthPrice = (price: ETHPrice): void => {
         this.ethPrice = price;
     }
 }
 
-module.exports = {Memory};
+export = Memory;
